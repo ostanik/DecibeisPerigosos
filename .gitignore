@@ -32,3 +32,6 @@ sysinfo.txt
 # Builds
 *.apk
 *.unitypackage
+UnityProject/Library/metadata/
+UnityProject/Library/ShaderCache/
+UnityProject/Temp/
