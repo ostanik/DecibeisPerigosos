@@ -6,8 +6,6 @@ using UnityEngine.UI;
 public class TextTyper : MonoBehaviour {
 
     public float letterPause = 0.2f;
-    public AudioClip typeSound1;
-    public AudioClip typeSound2;
     public bool isFinished = false;
 
     string message;
@@ -17,6 +15,12 @@ public class TextTyper : MonoBehaviour {
     void Start()
     {
         
+    }
+
+    public void setText(string text)
+    {
+        GetComponent<Text>().text = text.Replace("\\n", "\n");
+        isFinished = false;
     }
 
     public void StartTextAnimation()
@@ -43,7 +47,6 @@ public class TextTyper : MonoBehaviour {
             {
                 isFinished = true;
             }
-            yield return 0;
             yield return new WaitForSeconds(letterPause);
         }
     }

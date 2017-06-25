@@ -47,17 +47,18 @@ public class ExhibitionController : MonoBehaviour {
         var canvasGroup = GetComponentInChildren<CanvasGroup>();
         if (canShow)
         {
-            while (canvasGroup.alpha > 0)
-            {
-                canvasGroup.alpha -= Time.deltaTime * time;
-                yield return null;
-            }
-        }
-        else
-        {
             while (canvasGroup.alpha < 1)
             {
                 canvasGroup.alpha += Time.deltaTime * time;
+                yield return null;
+            }
+
+        }
+        else
+        {
+            while (canvasGroup.alpha > 0)
+            {
+                canvasGroup.alpha -= Time.deltaTime * time;
                 yield return null;
             }
         }
