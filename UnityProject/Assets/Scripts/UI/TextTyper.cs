@@ -14,23 +14,33 @@ public class TextTyper : MonoBehaviour {
     Text textComp;
 
     // Use this for initialization
-    void Start() {
+    void Start()
+    {
+        
+    }
+
+    public void StartTextAnimation()
+    {
         textComp = GetComponent<Text>();
         message = textComp.text;
         textComp.text = "";
         StartCoroutine(TypeText());
     }
 
-    public void Finish() {
+    public void Finish()
+    {
         textComp.text = message;
         isFinished = true;
         StopAllCoroutines();
     }
 
-    IEnumerator TypeText() {
-        foreach (char letter in message.ToCharArray()) {
+    IEnumerator TypeText()
+    {
+        foreach (char letter in message.ToCharArray())
+        {
             textComp.text += letter;
-            if (textComp.text.Length == message.Length) {
+            if (textComp.text.Length == message.Length)
+            {
                 isFinished = true;
             }
             yield return 0;
