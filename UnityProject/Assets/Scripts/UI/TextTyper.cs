@@ -3,10 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+public interface TextTyperDelegation {
+    void didFinishAnimation();
+}
+
 public class TextTyper : MonoBehaviour {
 
     public float letterPause = 0.2f;
     public bool isFinished = false;
+    public TextTyperDelegation delegation;
 
     string message;
     Text textComp;
@@ -33,8 +38,11 @@ public class TextTyper : MonoBehaviour {
 
     public void Finish()
     {
-        textComp.text = message;
-        isFinished = true;
+        if (message != null) {
+            textComp.text = message;
+            isFinished = true;
+            delegation.didFinishAnimation();
+        }
         StopAllCoroutines();
     }
 
@@ -46,6 +54,7 @@ public class TextTyper : MonoBehaviour {
             if (textComp.text.Length == message.Length)
             {
                 isFinished = true;
+                delegation.didFinishAnimation();
             }
             yield return new WaitForSeconds(letterPause);
         }

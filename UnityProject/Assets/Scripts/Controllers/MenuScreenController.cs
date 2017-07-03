@@ -13,7 +13,7 @@ public class MenuScreenController : MonoBehaviour {
     IEnumerator ChangeScene() {
         float fadeTime = GameObject.Find("Fade_Object").GetComponent<Fade>().BeginFade(1);
         yield return new WaitForSeconds(fadeTime);
-        SceneManager.LoadScene("Game1");
+        SceneManager.LoadScene("Intro");
     }
 
 }

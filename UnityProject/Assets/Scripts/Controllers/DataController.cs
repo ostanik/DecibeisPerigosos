@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class DataController : MonoBehaviour {
 
     public RoundData[] allRoundData;
+    public string PlayerName;
 
 	// Use this for initialization
 	void Start () {
