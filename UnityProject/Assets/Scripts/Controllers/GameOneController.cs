@@ -3,39 +3,35 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameOneController : MonoBehaviour, TextTyperDelegation, QuestionDelegation
+public class GameOneController : GameController, TextTyperDelegation, QuestionDelegation
 {
 
     public ExhibitionController[] screens;
-    public string[] dialogs;
 
-    private DialogBox dialogBox;
-    private QuestionBox questionBox;
-    private GameScreenController gameController;
     private int currentScreen = 0;
     private int currentDialog = 0;
     private bool canShowNextMessage = false;
 
 	// Use this for initialization
 	void Start () {
-        dialogBox = FindObjectOfType<DialogBox>();
-        dialogBox.setupDialogBox(GetComponent<GameOneController>());
-        questionBox = FindObjectOfType<QuestionBox>();
+        base.Setup();
         questionBox.delegation = GetComponent<GameOneController>();
-        gameController = GetComponent<GameScreenController>();
 	}
 
-	
 	// Update is called once per frame
 	void Update () {
         if (Input.anyKeyDown && canShowNextMessage)
         {
             if (currentScreen == 1) {
+                questionBox.thisSoundIsSafe = isSafeSound;
                 questionBox.GetComponent<ExhibitionController>().Show(true, 2);
+                canShowNextMessage = false;
             }
+
             if (currentScreen == 2) {
                 FindObjectOfType<GameScreenController>().loadNextGame();
                 currentScreen++;
+                canShowNextMessage = false;
             }
         }
 
@@ -82,6 +78,5 @@ public class GameOneController : MonoBehaviour, TextTyperDelegation, QuestionDel
         dialogBox.showMessage(dialogs[currentDialog]);
         questionBox.GetComponent<ExhibitionController>().Hide(true, 2);
         currentScreen++;
-        //FindObjectOfType<GameScreenController>().loadNextGame();
     }
 }

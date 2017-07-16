@@ -19,6 +19,11 @@ public class DialogBox : MonoBehaviour
         dialogBox.delegation = _delegate;
     }
 
+    public void clearText()
+    {
+        dialogBox.setText("");
+    }
+
     public void showMessage(string msg)
     {
         dialogBox.setText(msg);

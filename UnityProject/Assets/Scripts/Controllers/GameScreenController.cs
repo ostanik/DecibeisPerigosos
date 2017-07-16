@@ -26,8 +26,16 @@ public class GameScreenController: MonoBehaviour {
         gameObjects[currentGame].GetComponent<ExhibitionController>().Hide(true, 2);
         dialogBox.GetComponent<ExhibitionController>().Hide();
         questionBox.GetComponent<ExhibitionController>().Hide();
+        dialogBox.clearText();
         currentGame++;
         StartCoroutine(DestroyPreviewsGame());
+        StartCoroutine(ShowNextGame());
+    }
+
+    IEnumerator ShowNextGame()
+    {
+        yield return new WaitForSeconds(1);
+        gameObjects[currentGame].GetComponent<GameController>().Setup();
     }
 
     IEnumerator DestroyPreviewsGame()
@@ -35,9 +43,4 @@ public class GameScreenController: MonoBehaviour {
         yield return new WaitForSeconds(2);
         Destroy(gameObjects[currentGame - 1]);
     }
-}
-
-public interface GameController
-{
-    void Setup();
 }
