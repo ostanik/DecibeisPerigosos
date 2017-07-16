@@ -3,29 +3,43 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameOneController : MonoBehaviour, TextTyperDelegation
+public class GameOneController : MonoBehaviour, TextTyperDelegation, QuestionDelegation
 {
 
     public ExhibitionController[] screens;
-    public DialogBox dialogBox;
     public string[] dialogs;
+
+    private DialogBox dialogBox;
+    private QuestionBox questionBox;
+    private GameScreenController gameController;
     private int currentScreen = 0;
     private int currentDialog = 0;
     private bool canShowNextMessage = false;
 
 	// Use this for initialization
 	void Start () {
+        dialogBox = FindObjectOfType<DialogBox>();
         dialogBox.setupDialogBox(GetComponent<GameOneController>());
+        questionBox = FindObjectOfType<QuestionBox>();
+        questionBox.delegation = GetComponent<GameOneController>();
+        gameController = GetComponent<GameScreenController>();
 	}
+
 	
 	// Update is called once per frame
 	void Update () {
-        if (Input.GetKeyDown(KeyCode.Return) && canShowNextMessage)
+        if (Input.anyKeyDown && canShowNextMessage)
         {
-            dialogBox.showMessage(dialogs[currentDialog]);
+            if (currentScreen == 1) {
+                questionBox.GetComponent<ExhibitionController>().Show(true, 2);
+            }
+            if (currentScreen == 2) {
+                FindObjectOfType<GameScreenController>().loadNextGame();
+                currentScreen++;
+            }
         }
 
-        if (Input.GetKeyDown(KeyCode.Return) && currentScreen == 0)
+        if (Input.anyKeyDown && currentScreen == 0)
         {
             showNextScreen();
         }
@@ -63,4 +77,11 @@ public class GameOneController : MonoBehaviour, TextTyperDelegation
         dialogBox.showMessage(dialogs[currentDialog]);
     }
 
+    public void didFinishAnswer()
+    {
+        dialogBox.showMessage(dialogs[currentDialog]);
+        questionBox.GetComponent<ExhibitionController>().Hide(true, 2);
+        currentScreen++;
+        //FindObjectOfType<GameScreenController>().loadNextGame();
+    }
 }
