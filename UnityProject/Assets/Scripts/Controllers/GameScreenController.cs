@@ -15,11 +15,12 @@ public class GameScreenController: MonoBehaviour {
         dialogBox = FindObjectOfType<DialogBox>();
         questionBox = FindObjectOfType<QuestionBox>();
     }
-	
-	// Update is called once per frame
-	void Update () {
 
-	}
+    // Update is called once per frame
+    void Update()
+    {
+
+    }
 
     public void loadNextGame()
     {
@@ -28,8 +29,13 @@ public class GameScreenController: MonoBehaviour {
         questionBox.GetComponent<ExhibitionController>().Hide();
         dialogBox.clearText();
         currentGame++;
-        StartCoroutine(DestroyPreviewsGame());
-        StartCoroutine(ShowNextGame());
+        if (currentGame == gameObjects.Length)
+        {
+
+        } else {
+            StartCoroutine(DestroyPreviewsGame());
+            StartCoroutine(ShowNextGame());
+        }
     }
 
     IEnumerator ShowNextGame()
