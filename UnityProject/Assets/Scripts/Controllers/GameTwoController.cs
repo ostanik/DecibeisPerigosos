@@ -15,7 +15,6 @@ public class GameController: MonoBehaviour
     virtual public void Setup()
     {
         dialogBox = FindObjectOfType<DialogBox>();
-        dialogBox.setupDialogBox(GetComponent<GameOneController>());
         questionBox = FindObjectOfType<QuestionBox>();
         gameController = FindObjectOfType<GameScreenController>();
     }
@@ -46,6 +45,7 @@ public class GameTwoController : GameController, QuestionDelegation, TextTyperDe
     override public void Setup()
     {
         base.Setup();
+        this.dialogBox.setupDialogBox(GetComponent<GameTwoController>());
         this.questionBox.delegation = GetComponent<GameTwoController>();
         GetComponent<ExhibitionController>().Show(true, 2);
         StartCoroutine(setupDialog());

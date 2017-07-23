@@ -15,6 +15,7 @@ public class GameOneController : GameController, TextTyperDelegation, QuestionDe
 	// Use this for initialization
 	void Start () {
         base.Setup();
+        dialogBox.setupDialogBox(GetComponent<GameOneController>());
         questionBox.delegation = GetComponent<GameOneController>();
 	}
 
