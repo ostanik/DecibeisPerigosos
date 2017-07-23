@@ -16,8 +16,15 @@ public class DataController : MonoBehaviour {
         SceneManager.LoadScene("MenuScreen");
 	}
 
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    public void Restart()
+    {
+        playerName = "";
+        countCorrect = 0;
+        countError = 0;
+
+        foreach (var response in responseData)
+        {
+            response.isCorrect = false;
+        }
+    }
 }

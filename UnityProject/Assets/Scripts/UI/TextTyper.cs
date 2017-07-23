@@ -54,7 +54,10 @@ public class TextTyper : MonoBehaviour {
             if (textComp.text.Length == message.Length)
             {
                 isFinished = true;
-                delegation.didFinishAnimation();
+                if (delegation != null)
+                {
+                    delegation.didFinishAnimation();
+                }
             }
             yield return new WaitForSeconds(letterPause);
         }

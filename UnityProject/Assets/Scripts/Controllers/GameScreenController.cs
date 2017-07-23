@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameScreenController: MonoBehaviour {
@@ -24,18 +25,29 @@ public class GameScreenController: MonoBehaviour {
 
     public void loadNextGame()
     {
-        gameObjects[currentGame].GetComponent<ExhibitionController>().Hide(true, 2);
-        dialogBox.GetComponent<ExhibitionController>().Hide();
-        questionBox.GetComponent<ExhibitionController>().Hide();
         dialogBox.clearText();
         currentGame++;
+
         if (currentGame == gameObjects.Length)
         {
+            StartCoroutine(ShowEndGame());
+        }
+        else
+        {
+            gameObjects[currentGame].GetComponent<ExhibitionController>().Hide(true, 2);
+            dialogBox.GetComponent<ExhibitionController>().Hide();
+            questionBox.GetComponent<ExhibitionController>().Hide();
 
-        } else {
             StartCoroutine(DestroyPreviewsGame());
             StartCoroutine(ShowNextGame());
         }
+    }
+
+    IEnumerator ShowEndGame()
+    {
+        float fadeTime = GameObject.Find("Fade_Object").GetComponent<Fade>().BeginFade(1);
+        yield return new WaitForSeconds(fadeTime);
+        SceneManager.LoadScene("EndGame");
     }
 
     IEnumerator ShowNextGame()
