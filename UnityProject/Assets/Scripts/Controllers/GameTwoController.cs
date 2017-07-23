@@ -3,29 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameController: MonoBehaviour
-{
-    public string[] dialogs;
-
-    public bool isSafeSound;
-    public DialogBox dialogBox;
-    public QuestionBox questionBox;
-    public GameScreenController gameController;
-
-    virtual public void Setup()
-    {
-        dialogBox = FindObjectOfType<DialogBox>();
-        questionBox = FindObjectOfType<QuestionBox>();
-        gameController = FindObjectOfType<GameScreenController>();
-    }
-
-}
-
 public class GameTwoController : GameController, QuestionDelegation, TextTyperDelegation
 {
-    private int currentDialog = 0;
-    private int currentScreen = 0;
-    private bool canShowNextScreen = false;
     private bool canBusMove = false;
     private GameObject bus;
 

@@ -5,10 +5,6 @@ using UnityEngine;
 
 public class GameThreeController : GameController, QuestionDelegation, TextTyperDelegation
 {
-
-    private int currentDialog = 0;
-    private int currentScreen = 0;
-    private bool canShowNextScreen = false;
     private ExhibitionController zeca;
     private ExhibitionController cellphone;
 

@@ -5,8 +5,10 @@ using UnityEngine.SceneManagement;
 
 public class DataController : MonoBehaviour {
 
-    public RoundData[] allRoundData;
-    public string PlayerName;
+    public string playerName;
+    public int countCorrect;
+    public int countError;
+    public AnswerData[] responseData;
 
 	// Use this for initialization
 	void Start () {
@@ -14,10 +16,6 @@ public class DataController : MonoBehaviour {
         SceneManager.LoadScene("MenuScreen");
 	}
 
-    public RoundData getCurrentRoundData() {
-        return allRoundData[0];
-    }
-	
 	// Update is called once per frame
 	void Update () {
 		

@@ -27,7 +27,6 @@ public class IntroController : MonoBehaviour, TextTyperDelegation
         if (Input.GetKeyDown(KeyCode.Return)) {
             dialogText.Finish();
         }
-
     }
 
     IEnumerator ShowDialogAfter(float time)
@@ -52,6 +51,11 @@ public class IntroController : MonoBehaviour, TextTyperDelegation
     IEnumerator ChangeScene()
     {
         float fadeTime = GameObject.Find("Fade_Object").GetComponent<Fade>().BeginFade(1);
+        var dataController = FindObjectOfType<DataController>();
+        if (dataController != null)
+        {
+            dataController.playerName = playerName.text;
+        }
         yield return new WaitForSeconds(fadeTime);
         SceneManager.LoadScene("Game");
     }

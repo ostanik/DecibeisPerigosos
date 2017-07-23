@@ -5,10 +5,6 @@ using UnityEngine;
 
 public class GameFourController : GameController, QuestionDelegation, TextTyperDelegation
 {
-
-    private int currentDialog = 0;
-    private int currentScreen = 0;
-    private bool canShowNextScreen = false;
     public ExhibitionController[] tables;
     private ExhibitionController zeca;
 

@@ -6,10 +6,6 @@ using UnityEngine;
 public class GameFiveController : GameController, QuestionDelegation, TextTyperDelegation
 {
 
-    private int currentDialog = 0;
-    private int currentScreen = 0;
-    private bool canShowNextScreen = false;
-
     override public void Setup()
     {
         base.Setup();

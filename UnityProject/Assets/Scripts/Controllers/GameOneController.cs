@@ -8,9 +8,6 @@ public class GameOneController : GameController, TextTyperDelegation, QuestionDe
 
     public ExhibitionController[] screens;
 
-    private int currentScreen = 0;
-    private int currentDialog = 0;
-    private bool canShowNextMessage = false;
 
 	// Use this for initialization
 	void Start () {
@@ -21,18 +18,18 @@ public class GameOneController : GameController, TextTyperDelegation, QuestionDe
 
 	// Update is called once per frame
 	void Update () {
-        if (Input.anyKeyDown && canShowNextMessage)
+        if (Input.anyKeyDown && canShowNextScreen)
         {
             if (currentScreen == 1) {
                 questionBox.thisSoundIsSafe = isSafeSound;
                 questionBox.GetComponent<ExhibitionController>().Show(true, 2);
-                canShowNextMessage = false;
+                canShowNextScreen = false;
             }
 
             if (currentScreen == 2) {
                 FindObjectOfType<GameScreenController>().loadNextGame();
                 currentScreen++;
-                canShowNextMessage = false;
+                canShowNextScreen = false;
             }
         }
 
@@ -60,7 +57,7 @@ public class GameOneController : GameController, TextTyperDelegation, QuestionDe
 
     public void didFinishAnimation()
     {
-        canShowNextMessage = true;
+        canShowNextScreen = true;
         if (currentDialog + 1 < dialogs.Length)
         {
             currentDialog++;
