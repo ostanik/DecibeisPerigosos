@@ -7,10 +7,11 @@ public class GameThreeController : GameController, QuestionDelegation, TextTyper
 {
     private ExhibitionController zeca;
     private ExhibitionController cellphone;
+    private AudioSource audioSource;
 
     // Use this for initialization
     void Start () {
-		
+        audioSource = GetComponent<AudioSource>();
 	}
 
     override public void Setup()
@@ -34,13 +35,20 @@ public class GameThreeController : GameController, QuestionDelegation, TextTyper
                 cellphone.Show(true, 2);
                 StartCoroutine(showNextMsg());
                 canShowNextScreen = false;
+                audioSource.clip = sceneAudio;
+                audioSource.Play();
+                gameController.backgroundAudio.Pause();
             }
 
             if (currentScreen == 2)
             {
                 questionBox.thisSoundIsSafe = isSafeSound;
+                audioSource.Stop();
                 questionBox.GetComponent<ExhibitionController>().Show(true, 2);
+                questionBox.setListenAgainAudio(sceneAudio);
                 canShowNextScreen = false;
+                audioSource.Stop();
+                gameController.backgroundAudio.Play();
             }
 
             if (currentScreen == 3)

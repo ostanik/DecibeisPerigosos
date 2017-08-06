@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class GameOneController : GameController, TextTyperDelegation, QuestionDelegation
-{
+{   
 
     public ExhibitionController[] screens;
 
@@ -22,6 +22,7 @@ public class GameOneController : GameController, TextTyperDelegation, QuestionDe
         {
             if (currentScreen == 1) {
                 questionBox.thisSoundIsSafe = isSafeSound;
+                questionBox.setListenAgainAudio(sceneAudio);
                 questionBox.GetComponent<ExhibitionController>().Show(true, 2);
                 canShowNextScreen = false;
             }
@@ -36,6 +37,11 @@ public class GameOneController : GameController, TextTyperDelegation, QuestionDe
         if (Input.anyKeyDown && currentScreen == 0)
         {
             showNextScreen();
+            gameController = FindObjectOfType<GameScreenController>();
+            GetComponent<AudioSource>().Pause();
+            gameController.backgroundAudio.clip = backgroundAudio;
+            gameController.backgroundAudio.volume = 0.5f;
+            gameController.backgroundAudio.Play();
         }
     }
 

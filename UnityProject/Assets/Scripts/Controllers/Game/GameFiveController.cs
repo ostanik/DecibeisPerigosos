@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class GameFiveController : GameController, QuestionDelegation, TextTyperDelegation
 {
+    private AudioSource audioSource;
 
     override public void Setup()
     {
@@ -12,6 +13,13 @@ public class GameFiveController : GameController, QuestionDelegation, TextTyperD
         this.questionBox.delegation = GetComponent<GameFiveController>();
         GetComponent<ExhibitionController>().Show(true, 2);
         StartCoroutine(setupDialog());
+        gameController.backgroundAudio.Pause();
+        audioSource.Play();
+    }
+
+    void Start()
+    {
+        audioSource = GetComponent<AudioSource>();   
     }
 
     // Update is called once per frame
@@ -28,12 +36,17 @@ public class GameFiveController : GameController, QuestionDelegation, TextTyperD
             if (currentScreen == 3)
             {
                 canShowNextScreen = false;
+                audioSource.Stop();
+                gameController.backgroundAudio.Play();
                 questionBox.thisSoundIsSafe = isSafeSound;
+                questionBox.setListenAgainAudio(sceneAudio);
                 questionBox.GetComponent<ExhibitionController>().Show(true, 2);
             }
 
             if (currentScreen == 4)
             {
+                gameController.backgroundAudio.Pause();
+                audioSource.Play();
                 canShowNextScreen = false;
                 dialogBox.showMessage(dialogs[currentDialog]);
             }

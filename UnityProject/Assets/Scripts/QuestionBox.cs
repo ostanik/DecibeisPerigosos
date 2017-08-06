@@ -12,6 +12,7 @@ public interface QuestionDelegation
 public class QuestionBox : MonoBehaviour, FeedDelegation {
 
     public bool thisSoundIsSafe = false;
+    private AudioSource audioSource;
     public Feedback rightFeed;
     public Feedback wrongFeed;
     public QuestionDelegation delegation;
@@ -19,6 +20,7 @@ public class QuestionBox : MonoBehaviour, FeedDelegation {
 
     // Use this for initialization
     void Start () {
+        audioSource = GetComponent<AudioSource>();
         rightFeed.delegation = GetComponent<QuestionBox>();
         wrongFeed.delegation = GetComponent<QuestionBox>();
 	}
@@ -27,6 +29,11 @@ public class QuestionBox : MonoBehaviour, FeedDelegation {
 	void Update () {
 		
 	}
+
+    public void setListenAgainAudio(AudioClip clip)
+    {
+        audioSource.clip = clip;
+    }
 
     public void safeButtonPress()
     {
@@ -40,7 +47,17 @@ public class QuestionBox : MonoBehaviour, FeedDelegation {
 
     public void listenButtonPress()
     {
+        var gamecontroller = FindObjectOfType<GameScreenController>();
 
+        if (!audioSource.isPlaying) {
+            audioSource.Play();
+            gamecontroller.backgroundAudio.Pause();
+        }
+        else
+        {
+            gamecontroller.backgroundAudio.Play();
+            audioSource.Stop();
+        }
     }
 
     void correct(bool safePressed)
@@ -52,6 +69,7 @@ public class QuestionBox : MonoBehaviour, FeedDelegation {
         if ((thisSoundIsSafe && safePressed) || (!thisSoundIsSafe && !safePressed))
         {
             rightFeed.show();
+            rightFeed.GetComponent<AudioSource>().Play();
             if (dataController != null)
             {
                 dataController.countCorrect++;
@@ -64,6 +82,7 @@ public class QuestionBox : MonoBehaviour, FeedDelegation {
                 dataController.countError++;
                 dataController.responseData[currentGame].isCorrect = false;
             }
+            wrongFeed.GetComponent<AudioSource>().Play();
             wrongFeed.show();
         }
     }

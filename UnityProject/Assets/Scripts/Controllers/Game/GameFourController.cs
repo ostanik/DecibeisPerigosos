@@ -7,6 +7,7 @@ public class GameFourController : GameController, QuestionDelegation, TextTyperD
 {
     public ExhibitionController[] tables;
     private ExhibitionController zeca;
+    private AudioSource audioSource;
 
     override public void Setup()
     {
@@ -15,6 +16,11 @@ public class GameFourController : GameController, QuestionDelegation, TextTyperD
         zeca = GameObject.Find("ZecaMesa").GetComponent<ExhibitionController>();
         GetComponent<ExhibitionController>().Show(true, 2);
         StartCoroutine(setupDialog());
+    }
+
+    void Start()
+    {
+        audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -27,13 +33,16 @@ public class GameFourController : GameController, QuestionDelegation, TextTyperD
                 zeca.Hide(true, 1);
                 tables[0].Hide(true, 1);
                 tables[1].Show(true, 2);
+                audioSource.Play();
                 StartCoroutine(showNextMsg());
             }
 
             if (currentScreen == 2)
             {
                 canShowNextScreen = false;
+                audioSource.Stop();
                 questionBox.thisSoundIsSafe = isSafeSound;
+                questionBox.setListenAgainAudio(sceneAudio);
                 questionBox.GetComponent<ExhibitionController>().Show(true, 2);
             }
 

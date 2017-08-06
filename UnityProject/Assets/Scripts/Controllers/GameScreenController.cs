@@ -10,11 +10,13 @@ public class GameScreenController: MonoBehaviour {
     private QuestionBox questionBox;
     private int currentGame = 0;
     public GameObject[] gameObjects;
+    public AudioSource backgroundAudio;
 
     // Use this for initialization
     void Start () {
         dialogBox = FindObjectOfType<DialogBox>();
         questionBox = FindObjectOfType<QuestionBox>();
+        backgroundAudio = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame

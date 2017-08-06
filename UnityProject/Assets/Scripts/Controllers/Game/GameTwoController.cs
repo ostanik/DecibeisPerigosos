@@ -7,6 +7,7 @@ public class GameTwoController : GameController, QuestionDelegation, TextTyperDe
 {
     private bool canBusMove = false;
     private GameObject bus;
+    private AudioSource audioSource;
 
     public void didFinishAnimation()
     {
@@ -29,11 +30,12 @@ public class GameTwoController : GameController, QuestionDelegation, TextTyperDe
         GetComponent<ExhibitionController>().Show(true, 2);
         StartCoroutine(setupDialog());
         bus = GameObject.Find("Bus");
+        audioSource.Play();
     }
 
     // Use this for initialization
     void Start () {
-		
+        audioSource = GetComponent<AudioSource>();
 	}
 	
 	// Update is called once per frame
@@ -44,12 +46,15 @@ public class GameTwoController : GameController, QuestionDelegation, TextTyperDe
             {
                 questionBox.thisSoundIsSafe = isSafeSound;
                 questionBox.GetComponent<ExhibitionController>().Show(true, 2);
+                questionBox.setListenAgainAudio(sceneAudio);
+                audioSource.Pause();
                 canShowNextScreen = false;
             }
 
             if (currentScreen == 2)
             {
                 dialogBox.GetComponent<ExhibitionController>().Hide(true, 2);
+                audioSource.Play();
                 canBusMove = true;
                 StartCoroutine(nextGame());
             }
@@ -65,6 +70,7 @@ public class GameTwoController : GameController, QuestionDelegation, TextTyperDe
     IEnumerator nextGame()
     {
         yield return new WaitForSeconds(3);
+        audioSource.Stop();
         gameController.loadNextGame();
     }
 
