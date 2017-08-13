@@ -17,6 +17,7 @@ public class QuestionBox : MonoBehaviour, FeedDelegation {
     public Feedback wrongFeed;
     public QuestionDelegation delegation;
     public int currentGame = -1;
+    private bool corrected = false;
 
     // Use this for initialization
     void Start () {
@@ -62,28 +63,39 @@ public class QuestionBox : MonoBehaviour, FeedDelegation {
 
     void correct(bool safePressed)
     {
-        GetComponent<CanvasGroup>().blocksRaycasts = false;
-
-        var dataController = FindObjectOfType<DataController>();
-
-        if ((thisSoundIsSafe && safePressed) || (!thisSoundIsSafe && !safePressed))
+        if (!corrected)
         {
-            rightFeed.show();
-            rightFeed.GetComponent<AudioSource>().Play();
-            if (dataController != null)
+            corrected = true;
+            GetComponent<CanvasGroup>().blocksRaycasts = false;
+
+            var dataController = FindObjectOfType<DataController>();
+
+            if (audioSource.isPlaying)
             {
-                dataController.countCorrect++;
-                dataController.responseData[currentGame].isCorrect = true;
+                FindObjectOfType<GameScreenController>().backgroundAudio.Play();
+                audioSource.Stop();
             }
-        } else
-        {
-            if (dataController != null)
+
+            if ((thisSoundIsSafe && safePressed) || (!thisSoundIsSafe && !safePressed))
             {
-                dataController.countError++;
-                dataController.responseData[currentGame].isCorrect = false;
+                rightFeed.show();
+                rightFeed.GetComponent<AudioSource>().Play();
+                if (dataController != null)
+                {
+                    dataController.countCorrect++;
+                    dataController.responseData[currentGame].isCorrect = true;
+                }
             }
-            wrongFeed.GetComponent<AudioSource>().Play();
-            wrongFeed.show();
+            else
+            {
+                if (dataController != null)
+                {
+                    dataController.countError++;
+                    dataController.responseData[currentGame].isCorrect = false;
+                }
+                wrongFeed.GetComponent<AudioSource>().Play();
+                wrongFeed.show();
+            }
         }
     }
 
@@ -93,6 +105,7 @@ public class QuestionBox : MonoBehaviour, FeedDelegation {
         if (delegation != null) {
             delegation.didFinishAnswer();
         }
+        corrected = false;
     }
 
     public void didFinishShow() { }

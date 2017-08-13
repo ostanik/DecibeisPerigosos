@@ -25,7 +25,7 @@ public class GameFourController : GameController, QuestionDelegation, TextTyperD
 
     // Update is called once per frame
     void Update () {
-        if (Input.anyKeyDown && canShowNextScreen)
+        if ((Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1)) && canShowNextScreen)
         {
             if (currentScreen == 1)
             {
@@ -33,6 +33,7 @@ public class GameFourController : GameController, QuestionDelegation, TextTyperD
                 zeca.Hide(true, 1);
                 tables[0].Hide(true, 1);
                 tables[1].Show(true, 2);
+                gameController.backgroundAudio.Pause();
                 audioSource.Play();
                 StartCoroutine(showNextMsg());
             }
@@ -41,6 +42,7 @@ public class GameFourController : GameController, QuestionDelegation, TextTyperD
             {
                 canShowNextScreen = false;
                 audioSource.Stop();
+                gameController.backgroundAudio.Play();
                 questionBox.thisSoundIsSafe = isSafeSound;
                 questionBox.setListenAgainAudio(sceneAudio);
                 questionBox.GetComponent<ExhibitionController>().Show(true, 2);

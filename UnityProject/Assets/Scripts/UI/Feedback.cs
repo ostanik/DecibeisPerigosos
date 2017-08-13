@@ -14,6 +14,7 @@ public class Feedback : MonoBehaviour {
     private ExhibitionController exhibition;
     public FeedDelegation delegation;
     private bool dispatchOnce = true;
+    private bool updateFlag = true;
 
     // Use this for initialization
     void Start () {
@@ -23,7 +24,7 @@ public class Feedback : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (Input.anyKeyDown && canvas.alpha == 1)
+		if ((Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1)) && canvas.alpha == 1)
         {
             hide();
         }

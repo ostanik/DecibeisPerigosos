@@ -30,6 +30,7 @@ public class GameTwoController : GameController, QuestionDelegation, TextTyperDe
         GetComponent<ExhibitionController>().Show(true, 2);
         StartCoroutine(setupDialog());
         bus = GameObject.Find("Bus");
+        gameController.backgroundAudio.Pause();
         audioSource.Play();
     }
 
@@ -40,20 +41,23 @@ public class GameTwoController : GameController, QuestionDelegation, TextTyperDe
 	
 	// Update is called once per frame
 	void Update () {
-		if (Input.anyKeyDown && canShowNextScreen)
+		if ((Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1)) && canShowNextScreen)
         {
             if (currentScreen == 1)
             {
+                canShowNextScreen = false;
                 questionBox.thisSoundIsSafe = isSafeSound;
                 questionBox.GetComponent<ExhibitionController>().Show(true, 2);
                 questionBox.setListenAgainAudio(sceneAudio);
                 audioSource.Pause();
-                canShowNextScreen = false;
+                gameController.backgroundAudio.Play();
             }
 
             if (currentScreen == 2)
             {
+                canShowNextScreen = false;
                 dialogBox.GetComponent<ExhibitionController>().Hide(true, 2);
+                gameController.backgroundAudio.Pause();
                 audioSource.Play();
                 canBusMove = true;
                 StartCoroutine(nextGame());
@@ -71,6 +75,7 @@ public class GameTwoController : GameController, QuestionDelegation, TextTyperDe
     {
         yield return new WaitForSeconds(3);
         audioSource.Stop();
+        gameController.backgroundAudio.Play();
         gameController.loadNextGame();
     }
 

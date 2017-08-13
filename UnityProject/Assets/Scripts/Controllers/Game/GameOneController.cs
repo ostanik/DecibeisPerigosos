@@ -18,23 +18,23 @@ public class GameOneController : GameController, TextTyperDelegation, QuestionDe
 
 	// Update is called once per frame
 	void Update () {
-        if (Input.anyKeyDown && canShowNextScreen)
+        if ((Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1)) && canShowNextScreen)
         {
             if (currentScreen == 1) {
+                canShowNextScreen = false;
                 questionBox.thisSoundIsSafe = isSafeSound;
                 questionBox.setListenAgainAudio(sceneAudio);
                 questionBox.GetComponent<ExhibitionController>().Show(true, 2);
-                canShowNextScreen = false;
             }
 
             if (currentScreen == 2) {
+                canShowNextScreen = false;
                 FindObjectOfType<GameScreenController>().loadNextGame();
                 currentScreen++;
-                canShowNextScreen = false;
             }
         }
 
-        if (Input.anyKeyDown && currentScreen == 0)
+        if ((Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1)) && currentScreen == 0)
         {
             showNextScreen();
             gameController = FindObjectOfType<GameScreenController>();

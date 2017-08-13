@@ -25,7 +25,7 @@ public class GameFiveController : GameController, QuestionDelegation, TextTyperD
     // Update is called once per frame
     void Update()
     {
-        if (Input.anyKeyDown && canShowNextScreen)
+        if ((Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1)) && canShowNextScreen)
         {
             if (currentScreen < 3)
             {
@@ -45,8 +45,6 @@ public class GameFiveController : GameController, QuestionDelegation, TextTyperD
 
             if (currentScreen == 4)
             {
-                gameController.backgroundAudio.Pause();
-                audioSource.Play();
                 canShowNextScreen = false;
                 dialogBox.showMessage(dialogs[currentDialog]);
             }
@@ -71,6 +69,8 @@ public class GameFiveController : GameController, QuestionDelegation, TextTyperD
     {
         dialogBox.showMessage(dialogs[currentDialog]);
         questionBox.GetComponent<ExhibitionController>().Hide();
+        gameController.backgroundAudio.Pause();
+        audioSource.Play();
     }
 
     IEnumerator showNextMsg()

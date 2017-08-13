@@ -27,7 +27,7 @@ public class GameThreeController : GameController, QuestionDelegation, TextTyper
     // Update is called once per frame
     void Update()
     {
-        if (Input.anyKeyDown && canShowNextScreen)
+        if ((Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1)) && canShowNextScreen)
         {
             if (currentScreen == 1)
             {
